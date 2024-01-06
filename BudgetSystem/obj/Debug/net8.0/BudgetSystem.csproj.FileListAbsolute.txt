@@ -101,3 +101,4 @@
 /Users/takoTomorrow/Desktop/Project/Github/BudgetSystem/BudgetSystem/obj/Debug/net8.0/BudgetSystem.pdb
 /Users/takoTomorrow/Desktop/Project/Github/BudgetSystem/BudgetSystem/obj/Debug/net8.0/BudgetSystem.genruntimeconfig.cache
 /Users/takoTomorrow/Desktop/Project/Github/BudgetSystem/BudgetSystem/obj/Debug/net8.0/ref/BudgetSystem.dll
+/Users/takoTomorrow/Desktop/Project/Github/BudgetSystem/BudgetSystem/obj/Debug/net8.0/BudgetSystem.sourcelink.json

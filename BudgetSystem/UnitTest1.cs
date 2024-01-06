@@ -19,31 +19,53 @@ public class Tests
     public void SameYearSameMonthSameDay()
     {
         GetData();
-        var s = new DateTime(2024,01,01) ;
-        var e = new DateTime(2024,01,01) ;
-        var actual = _budgetService.Query(s,e);
+        var s = new DateTime(2024, 01, 01);
+        var e = new DateTime(2024, 01, 01);
+        var actual = _budgetService.Query(s, e);
         Assert.AreEqual(10, actual);
     }
     [Test]
     public void SameYearSameMonthFullMonth()
     {
         GetData();
-        var s = new DateTime(2024,01,01) ;
-        var e = new DateTime(2024,01,31) ;
-        var actual = _budgetService.Query(s,e);
+        var s = new DateTime(2024, 01, 01);
+        var e = new DateTime(2024, 01, 31);
+        var actual = _budgetService.Query(s, e);
         Assert.AreEqual(310, actual);
     }
     [Test]
     public void SameYearSameMonthPartialMonth()
     {
         GetData();
-        var s = new DateTime(2024,01,03) ;
-        var e = new DateTime(2024,01,17) ;
-        var actual = _budgetService.Query(s,e);
+        var s = new DateTime(2024, 01, 03);
+        var e = new DateTime(2024, 01, 17);
+        var actual = _budgetService.Query(s, e);
         Assert.AreEqual(150, actual);
     }
 
-    private void GetData(){
+    [Test]
+    public void NoData()
+    {
+        GetData();
+        var s = new DateTime(2024, 03 ,03);
+        var e = new DateTime(2024, 03, 17);
+        var actual = _budgetService.Query(s, e);
+        Assert.AreEqual(0, actual);
+    }
+
+    [Test]
+    public void InvalidDay()
+    {
+        GetData();
+        var s = new DateTime(2024, 06, 03);
+        var e = new DateTime(2024, 04, 17);
+        var actual = _budgetService.Query(s, e);
+        Assert.AreEqual(0, actual);
+    }
+
+
+    private void GetData()
+    {
 
         _budgetRepo.GetAll().Returns(new List<Budget>()
         {
