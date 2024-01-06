@@ -63,6 +63,16 @@ public class Tests
         Assert.AreEqual(0, actual);
     }
 
+     [Test]
+    public void CrossMonth()
+    {
+        GetData();
+        var s = new DateTime(2024, 01, 03);
+        var e = new DateTime(2024, 02, 17);
+        var actual = _budgetService.Query(s, e);
+        Assert.AreEqual(1990, actual);
+    }
+
 
     private void GetData()
     {
