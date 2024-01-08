@@ -30,59 +30,56 @@ public class BudgetService
             };
         });
 
-        var dayRange = GetMonthsWithDaysInRange(start, end);
+        List<DateResult> dayRange = new List<DateResult>();
+
+        if (start.Year == end.Year && start.Month == end.Month)
+            dayRange.Add(new DateResult()
+            {
+                Year = start.Year,
+                Month = start.Month,
+                Days = end.Day - start.Day + 1
+            });
+        else
+        {
+            var startDays = DateTime.DaysInMonth(start.Year, start.Month);
+
+            dayRange.Add(new DateResult()
+            {
+                Year = start.Year,
+                Month = start.Month,
+                Days = startDays - start.Day + 1
+            });
+
+            dayRange.Add(new DateResult()
+            {
+                Year = end.Year,
+                Month = end.Month,
+                Days = end.Day
+            });
+
+            var secondMonth = start.AddMonths(1);
+
+            for (var date = secondMonth; date < end; date.AddMonths(1))
+            {
+                if (date.Year == end.Year && date.Month == end.Month)
+                    break;
+
+                dayRange.Add(new DateResult()
+                {
+                    Year = date.Year,
+                    Month = date.Month,
+                    Days = DateTime.DaysInMonth(date.Year, date.Month)
+                });
+
+            }
+        }
+
 
         return dayRange.Join(data,
         day => new { day.Year, day.Month },
         dd => new { dd.Year, dd.Month },
         (day, dd) => dd.DailyAmount * day.Days
         ).Sum();
-    }
-
-    private List<DateResult> GetMonthsWithDaysInRange(DateTime startDate, DateTime endDate)
-    {
-        List<DateResult> result = new List<DateResult>();
-
-        if (startDate.Year == endDate.Year && startDate.Month == endDate.Month)
-            return new List<DateResult>() {
-            new DateResult(){
-                Year = startDate.Year,
-                Month = startDate.Month,
-                Days = endDate.Day - startDate.Day +1 }};
-
-        var startDays = DateTime.DaysInMonth(startDate.Year, startDate.Month);
-
-        result.Add(new DateResult()
-        {
-            Year = startDate.Year,
-            Month = startDate.Month,
-            Days = startDays - startDate.Day + 1
-        });
-
-        result.Add(new DateResult()
-        {
-            Year = endDate.Year,
-            Month = endDate.Month,
-            Days = endDate.Day
-        });
-
-        var secondMonth = startDate.AddMonths(1);
-
-        for (var date = secondMonth; date < endDate; date.AddMonths(1))
-        {
-            if (date.Year == endDate.Year && date.Month == endDate.Month)
-                break;
-
-            result.Add(new DateResult()
-            {
-                Year = date.Year,
-                Month = date.Month,
-                Days = DateTime.DaysInMonth(date.Year, date.Month)
-            });
-
-        }
-
-        return result;
     }
 }
 
