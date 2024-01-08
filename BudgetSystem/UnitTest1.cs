@@ -19,10 +19,11 @@ public class Tests
     public void SameYearSameMonthSameDay()
     {
         GetData();
-        var s = new DateTime(2024, 01, 01);
-        var e = new DateTime(2024, 01, 01);
-        var actual = _budgetService.Query(s, e);
-        Assert.AreEqual(10, actual);
+        var start = new DateTime(2024, 02, 11);
+        var end = new DateTime(2024, 02, 11);
+        var actual = _budgetService.Query(start, end);
+
+        Assert.That(actual, Is.EqualTo((decimal)100));
     }
     [Test]
     public void SameYearSameMonthFullMonth()
